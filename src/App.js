@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import dummyStore from './dummy-store'
 import './App.css'
 import Main from './Main/Main'
 import Navigation from './Navigation/Navigation'
 import {Route, Link, Switch} from 'react-router-dom';
 import SingleNote from './SingleNote/SingleNote'
 import SingleNoteNav from './SingleNoteNav/SingleNoteNav'
+import ApiContext from './ApiContext';
 
 
 class App extends Component {
@@ -14,35 +14,10 @@ class App extends Component {
     folders: []
   }
 
-  getNotes = (notes=[], folderId) => {
-    let arr = [];
-
-    for(let i=0;i<notes.length;i++) {
-
-      if(notes[i].folderId === folderId.folderId) {
-        arr.push(notes[i])
-      }
-      
-    }
-
-    return arr;
-  }
-
-  getOneNote = (notes=[], noteId) => {
-
-    console.log(notes);
-
-    for(let i=0;i<notes.length;i++) {
-
-      if(notes[i].id === noteId.noteId) {
-        return notes[i];
-      }
-      
-    }
-
-  }
-
   getOneFolder = (folders = [], folderId) => {
+    if(folders.length === 0) {
+      return {};
+    }
     console.log(folders);
 
     for(let i=0;i<folders.length;i++) {
@@ -55,7 +30,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState(dummyStore)
+    Promise.all([
+      fetch('http://localhost:9090/notes'),
+      fetch('http://localhost:9090/folders')
+    ])
+    .then(([responsNotes, responseFolders]) => {
+      return Promise.all([responsNotes.json(), responseFolders.json()])
+    })
+    .then(([notes, folders]) => {
+
+      this.setState({notes, folders});
+    });
   }
 
   renderMain() {
@@ -64,18 +49,18 @@ class App extends Component {
 
         <Route exact path='/'
         render= {() =>
-        <Main notes={this.state.notes}/>}/>
+        <Main/>}/>
 
         <Route path='/folder/:folderId'
         render= {routeProps =>
           
-          <Main notes={this.getNotes(this.state.notes, routeProps.match.params)}/>
+          <Main folderId={routeProps.match.params}/>
         }/>
 
         <Route path='/note/:noteId'
         render= {routeProps =>
           
-          <SingleNote note={this.getOneNote(this.state.notes, routeProps.match.params)}/>
+          <SingleNote noteId={routeProps.match.params}/>
         }/>
 
       </Switch>
@@ -89,35 +74,48 @@ class App extends Component {
 
       <Route exact path='/'
       render= {() =>
-        <Navigation folders={this.state.folders}/>}/>
+        <Navigation/>}/>
 
       <Route path='/folder/:folderId'
         render= {routeProps =>
           
-          <Navigation folders={this.state.folders}/>}/>
+          <Navigation/>}/>
         
 
       <Route path='/note/:noteId'
         render= {routeProps =>
           
-          <SingleNoteNav folder={this.getOneFolder(this.state.folders, routeProps.match.params)}/>
+          <SingleNoteNav folderId={routeProps.match.params}/>
         }/>
 
       </Switch>
     )
   }
 
+  deleteNote = noteId => {
+    this.setState({
+        notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+  }
+
   render() {
+    const value = {
+      notes: this.state.notes,
+      folders: this.state.folders,
+      deleteNote: this.deleteNote
+    }
     return(
-      <div>
-        <header>
-          <Link to={'/'}><h1>Noteful</h1></Link>
-        </header>
-        <div id="container">
-          <nav>{this.renderNav()}</nav>
-          <main>{this.renderMain()}</main>
+      <ApiContext.Provider value={value}>
+        <div>
+          <header>
+            <Link to={'/'}><h1>Noteful</h1></Link>
+          </header>
+          <div id="container">
+            <nav>{this.renderNav()}</nav>
+            <main>{this.renderMain()}</main>
+          </div>
         </div>
-      </div>
+      </ApiContext.Provider>
     );
   }
 }
