@@ -13,6 +13,8 @@ class AddNote extends Component {
             if(folders[i].name === folderName)
                 return folders[i].id;
         }
+
+        return "Not Found";
     }
 
     AddFolder = (event) => {
@@ -27,6 +29,11 @@ class AddNote extends Component {
 
           const folderId = this.getFolderId(folderName);
 
+          if(folderId === "Not Found") {
+            alert("Folder not found")
+            return;
+          }
+            
           let note = {
               name: noteName,
               modified: new Date(),
