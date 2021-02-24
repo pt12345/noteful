@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import ApiContext from '../ApiContext';
-import Note from '../Note/Note'
-
+import Note from '../Note/Note';
+import PropTypes from 'prop-types';
 
 class Main extends Component {
 
@@ -20,13 +21,11 @@ class Main extends Component {
       }
       
     }
-
     return arr;
   }
 
 
-  render() {
-    
+  render() {  
     const { notes=[] } = this.context
     const folderId = this.props.folderId || {}
     const folderNotes = this.getNotes(notes, folderId);
@@ -39,12 +38,16 @@ class Main extends Component {
                 </li>
              )}
           </ul>
-          <div className='new_note'>
-              <span>New Note</span>
-          </div>
+          <ul className='new_note'>
+            <li className='new_note_link'><NavLink to={`/folder/addNote`}>Add Note</NavLink></li>
+          </ul>
       </section>
     );
   }
 }
+
+Main.propTypes = {
+  folderId: PropTypes.object
+};
 
 export default Main;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
 import ApiContext from '../ApiContext'
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
+import { format, parseISO } from 'date-fns'
+import PropTypes from 'prop-types'
 
 class Note extends Component {
 
@@ -35,13 +36,19 @@ class Note extends Component {
     })
     .catch(error => {
       console.log({error})
-    })
-    
-
-    
+    })  
   }
 
   render() {
+
+    let modified = ""
+    try {
+      modified = format(parseISO(this.props.modified), 'MMM yyyy')
+    }
+    catch {
+      modified = "N/A"
+    }
+
     return(
       <div className="Note">
           <h2>
@@ -49,18 +56,25 @@ class Note extends Component {
                 {this.props.name}
             </Link>
           </h2>
-          
-          <button className='delete_button' type='button' onClick={this.handleDelete}>
-            Delete
-          </button>
-          <div className="dates">
-              <div className="date_modified">
-                  Modified:{this.props.modified}
-              </div>
-          </div>
+          <div className="note_container">
+            <div className="date_modified">
+            Last Modified: {modified}
+            </div>
+            <div className='delete_button'>
+              <button type='button' onClick={this.handleDelete}>
+                Delete Note
+              </button>
+            </div>
+          </div>  
       </div>
     );
   }
 }
+
+Note.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  modified: PropTypes.string
+};
 
 export default withRouter(Note);

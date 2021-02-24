@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import './Navigation.css'
 import ApiContext from '../ApiContext';
-
 class Navigation extends Component {
 
   static contextType = ApiContext
@@ -14,20 +13,18 @@ class Navigation extends Component {
       <div>
           <ul>
               {folders.map(folder => 
-                  <li key={folder.id}>
+                  <li className="folder_list" key={folder.id}>
                       <NavLink
                         className='folder_link'
                         to={`/folder/${folder.id}`}>
                             {folder.name}
                         </NavLink>
                   </li>
-              )
-
-              }
+              )}
           </ul>
-          <div className='new_folder'>
-              <span>New Folder</span>
-          </div>
+          <ul className='new_folder'>    
+              <li className='new_folder_link'><NavLink  to={`/folder/addFolder`}>Add Folder</NavLink></li>
+          </ul>
       </div>
     );
   }

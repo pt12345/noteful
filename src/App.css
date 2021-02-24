@@ -1,20 +1,120 @@
 nav {
-    border-width: 5px;
-    border-style: solid;
+
     width: 30%;
+  
+}
+
+.header-link {
+    
+    padding-left: 2%;
+    font-size: xx-large;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.date_modified {
+    color: white;
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
 
 header {
+    padding-bottom: 20px;
+    padding-top: 20px;
     border-width: 5px;
     border-style: solid;
+    background-color: #334139;
 }
 
 main {
-    border-width: 5px;
-    border-style: solid;
     width: 70%;
 }
 
 #container {
     display: flex;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding-top: 10px;
+    border-style: solid;
+    margin: 10px;
+}
+
+.note_container {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete_button {
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: white;
+    margin-left: 5px;
+}
+
+.folder_list, .new_folder {
+    padding-bottom: 10px;
+    font-size: large;
+    text-align: center;
+}
+
+.new_folder {
+    padding-top: 5px;
+    
+}
+
+.new_folder_link {
+    padding-bottom: 10px;
+}
+
+.new_note {
+    width: 300px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.new_note_link {
+    padding-bottom: 10px;
+}
+
+.note_content {
+    color: white;
+    padding: 10px;
+}
+
+.back_button {
+    font-size: large;
+    text-decoration: underline;
+    padding-left: 10px;
+}
+
+.registration__hint, .form-group {
+    color: white;
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+#folder-name {
+    margin-left: 38px;
+}
+
+#note {
+    margin-left: 46px;
+    width: 400px;
+    height: 100px;
+}
+
+body {
+    background-color:  #1E2D24;
 }

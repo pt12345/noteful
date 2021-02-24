@@ -6,6 +6,10 @@ import {Route, Link, Switch} from 'react-router-dom';
 import SingleNote from './SingleNote/SingleNote'
 import SingleNoteNav from './SingleNoteNav/SingleNoteNav'
 import ApiContext from './ApiContext';
+import AddFolder from './AddFolder/AddFolder';
+import AddNote from './AddNote/AddNote';
+import NotesError from './NotesError/NotesError';
+import FoldersError from './FoldersError/FoldersError';
 
 
 class App extends Component {
@@ -18,7 +22,6 @@ class App extends Component {
     if(folders.length === 0) {
       return {};
     }
-    console.log(folders);
 
     for(let i=0;i<folders.length;i++) {
 
@@ -49,22 +52,27 @@ class App extends Component {
 
         <Route exact path='/'
         render= {() =>
-        <Main/>}/>
+          <Main/>}/>
+             
+        <Route exact path='/folder/addFolder'
+        render= {() =>
+          <AddFolder/>}/>
+
+        <Route exact path='/folder/addNote'
+        render= {() =>
+          <AddNote/>}/>
 
         <Route path='/folder/:folderId'
-        render= {routeProps =>
-          
+        render= {routeProps => 
           <Main folderId={routeProps.match.params}/>
         }/>
 
         <Route path='/note/:noteId'
-        render= {routeProps =>
-          
+        render= {routeProps => 
           <SingleNote noteId={routeProps.match.params}/>
         }/>
 
       </Switch>
-
     )
   }
 
@@ -72,21 +80,20 @@ class App extends Component {
     return(
       <Switch>
 
-      <Route exact path='/'
-      render= {() =>
-        <Navigation/>}/>
-
-      <Route path='/folder/:folderId'
-        render= {routeProps =>
-          
+        <Route exact path='/'
+        render= {() =>
           <Navigation/>}/>
-        
 
-      <Route path='/note/:noteId'
-        render= {routeProps =>
+
+        <Route path='/folder/:folderId'
+          render= {() =>
+            <Navigation/>}/>
           
-          <SingleNoteNav folderId={routeProps.match.params}/>
-        }/>
+
+        <Route path='/note/:noteId'
+          render= {routeProps =>
+            <SingleNoteNav folderId={routeProps.match.params}/>
+          }/>
 
       </Switch>
     )
@@ -98,21 +105,44 @@ class App extends Component {
     });
   }
 
+  addFolder = newFolder => {
+    let foldersArr = this.state.folders;
+
+    foldersArr.push(newFolder)
+
+    this.setState({ folders: foldersArr })
+
+  }
+
+  addNote = newNote => {
+    let notesArr = this.state.notes;
+
+    notesArr.push(newNote)
+
+    this.setState({ notes: notesArr })
+  }
+
   render() {
     const value = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
     }
     return(
       <ApiContext.Provider value={value}>
-        <div>
+        <div id="app">
           <header>
-            <Link to={'/'}><h1>Noteful</h1></Link>
+            <Link className="header-link" to={'/'}>Noteful</Link>
           </header>
           <div id="container">
-            <nav>{this.renderNav()}</nav>
-            <main>{this.renderMain()}</main>
+            <FoldersError>
+              <nav>{this.renderNav()}</nav>
+            </FoldersError>
+            <NotesError>
+              <main>{this.renderMain()}</main>
+            </NotesError>
           </div>
         </div>
       </ApiContext.Provider>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import ApiContext from '../ApiContext';
-
+import PropTypes from 'prop-types';
 class SingleNoteNav extends Component {
   
   static contextType = ApiContext
@@ -10,7 +10,6 @@ class SingleNoteNav extends Component {
     if(folders.length === 0) {
       return {};
     }
-    console.log(folders);
 
     for(let i=0;i<folders.length;i++) {
 
@@ -22,19 +21,24 @@ class SingleNoteNav extends Component {
   }
 
   render() {
-    const { folders=[] } = this.context
-    const folder = this.getOneFolder(folders, this.props.folderId)
+    const { folders=[] } = this.context;
+    const folderId = this.props.folderId || {}
+    const folder = this.getOneFolder(folders, folderId)
 
     return(
       <div>
         <h2>{folder.name}</h2>
-        <button className='back_button' type='button'>
-            Back
-          </button>
+        <Link className='back_button' to={`/`}>
+                Back
+        </Link>
       </div>
 
     );
   }
 }
+
+SingleNoteNav.propTypes = {
+  folderId: PropTypes.object.isRequired
+};
 
 export default SingleNoteNav;

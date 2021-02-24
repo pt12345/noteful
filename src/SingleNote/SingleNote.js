@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Note from '../Note/Note'
 import ApiContext from '../ApiContext';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 
@@ -15,8 +16,6 @@ class SingleNote extends Component {
     if(notes.length === 0) {
       return {};
     }
-
-    console.log(notes);
 
     for(let i=0;i<notes.length;i++) {
 
@@ -40,11 +39,15 @@ class SingleNote extends Component {
           <Note id={note.id} name={note.name} modified={note.modified} onDeleteNote={this.handleDeleteNote}/>
 
           <div>
-              <span>{note.content}</span>
+              <p className="note_content">{note.content}</p>
           </div>
       </section>
     );
   }
 }
+
+SingleNote.propTypes = {
+  noteId: PropTypes.object.isRequired
+};
 
 export default withRouter(SingleNote);

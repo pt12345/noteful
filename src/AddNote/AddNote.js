@@ -1,0 +1,91 @@
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
+import ApiContext from '../ApiContext'
+
+class AddNote extends Component {
+
+    static contextType = ApiContext;
+
+    getFolderId = (folderName) => {
+        const { folders=[] } = this.context
+
+        for(let i=0;i<folders.length;i++) {
+            if(folders[i].name === folderName)
+                return folders[i].id;
+        }
+    }
+
+    AddFolder = (event) => {
+        event.preventDefault();
+
+        const noteName = document.getElementById('note-name').value;
+        const folderName = document.getElementById('folder-name').value;
+        const noteText = document.getElementById('note').value;
+        const folderId = this.getFolderId(folderName);
+
+         let note = {
+            name: noteName,
+            modified: new Date(),
+            folderId: folderId,
+            content: noteText
+        }
+
+        fetch(`http://localhost:9090/notes`, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(note)
+        })
+        .then(response => {
+
+            if(!response.ok)
+                console.log("Add note error")
+            
+            return response.json()
+        })
+        .then(responseJson => {
+
+            this.context.addNote(responseJson)
+
+            this.props.history.push(`/`)
+        })
+    }
+
+    render() {
+        return (
+            <form className="registration">
+              <h2>Add Note</h2>
+              <div className="registration__hint">* required field</div>  
+              <div className="form-group">
+                <div className="form-group">
+                  <label htmlFor="name">Note Name *</label>
+                  <input type="text"
+                    name="name" id="note-name"/>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="name">Folder *</label>
+                  <input type="text"
+                    name="name" id="folder-name"/>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="name">Note      *</label>
+                  <textarea
+                    name="name" id="note"/>
+                </div>
+              </div>
+              <div className="form-group">
+
+               <button type="submit" className="new_note_button" onClick={this.AddFolder}>
+                   Save
+               </button>
+              </div>
+            </form>
+          )
+    }
+
+}
+
+export default withRouter(AddNote);
