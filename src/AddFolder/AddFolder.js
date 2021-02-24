@@ -9,28 +9,31 @@ class AddFolder extends Component {
     AddFolder = (event) => {
         event.preventDefault();
 
-        const folder = {name: document.getElementById('folder-name').value } 
-
-        fetch(`http://localhost:9090/folders`, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json'
-            },
-            body: JSON.stringify(folder)
-        })
-        .then(response => {
-
-            if(!response.ok)
-                console.log("Add folder error")
-            
-            return response.json()
-        })
-        .then(responseJson => {
-
-            this.context.addFolder(responseJson)
-
-            this.props.history.push(`/`)
-        })
+        const folder = {name: document.getElementById('folder-name').value }
+        
+        if(folder.name.length > 0) {
+            console.log("hi")
+            fetch(`http://localhost:9090/folders`, {
+                method: 'POST',
+                headers: {
+                  'content-type': 'application/json'
+                },
+                body: JSON.stringify(folder)
+            })
+            .then(response => {
+    
+                if(!response.ok)
+                    console.log("Add folder error")
+                
+                return response.json()
+            })
+            .then(responseJson => {
+    
+                this.context.addFolder(responseJson)
+    
+                this.props.history.push(`/`)
+            })
+        }
     }
 
     render() {
@@ -41,7 +44,7 @@ class AddFolder extends Component {
               <div className="form-group">
                 <label htmlFor="name">Folder Name *</label>
                 <input type="text"
-                  name="name" id="folder-name"/>
+                  name="name" id="folder-name" required/>
               </div>
               <div className="form-group">
 

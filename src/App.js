@@ -37,8 +37,15 @@ class App extends Component {
       fetch('http://localhost:9090/notes'),
       fetch('http://localhost:9090/folders')
     ])
-    .then(([responsNotes, responseFolders]) => {
-      return Promise.all([responsNotes.json(), responseFolders.json()])
+    .then(([responseNotes, responseFolders]) => {
+
+      if(!responseFolders.ok)
+        console.log("Folder response error")
+
+      if(!responseNotes.ok)
+        console.log("Note response error")
+
+      return Promise.all([responseNotes.json(), responseFolders.json()])
     })
     .then(([notes, folders]) => {
 

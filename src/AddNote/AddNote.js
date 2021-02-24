@@ -21,35 +21,41 @@ class AddNote extends Component {
         const noteName = document.getElementById('note-name').value;
         const folderName = document.getElementById('folder-name').value;
         const noteText = document.getElementById('note').value;
-        const folderId = this.getFolderId(folderName);
+        
 
-         let note = {
-            name: noteName,
-            modified: new Date(),
-            folderId: folderId,
-            content: noteText
-        }
+        if(noteName.length > 0 && folderName.length > 0 && noteText.length > 0) {
 
-        fetch(`http://localhost:9090/notes`, {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json'
-            },
-            body: JSON.stringify(note)
-        })
-        .then(response => {
+          const folderId = this.getFolderId(folderName);
 
-            if(!response.ok)
-                console.log("Add note error")
-            
-            return response.json()
-        })
-        .then(responseJson => {
+          let note = {
+              name: noteName,
+              modified: new Date(),
+              folderId: folderId,
+              content: noteText
+          }
 
-            this.context.addNote(responseJson)
+          fetch(`http://localhost:9090/notes`, {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(note)
+          })
+          .then(response => {
 
-            this.props.history.push(`/`)
-        })
+              if(!response.ok)
+                  console.log("Add note error")
+              
+              return response.json()
+          })
+          .then(responseJson => {
+
+              this.context.addNote(responseJson)
+
+              this.props.history.push(`/`)
+          })
+
+      }
     }
 
     render() {
@@ -61,19 +67,19 @@ class AddNote extends Component {
                 <div className="form-group">
                   <label htmlFor="name">Note Name *</label>
                   <input type="text"
-                    name="name" id="note-name"/>
+                    name="name" id="note-name" required/>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="name">Folder *</label>
                   <input type="text"
-                    name="name" id="folder-name"/>
+                    name="name" id="folder-name" required/>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="name">Note      *</label>
+                  <label htmlFor="name">Note *</label>
                   <textarea
-                    name="name" id="note"/>
+                    name="name" id="note" required/>
                 </div>
               </div>
               <div className="form-group">
