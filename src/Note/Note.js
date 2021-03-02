@@ -48,6 +48,8 @@ class Note extends Component {
     catch {
       modified = "N/A"
     }
+    
+    console.log(this.context);
 
     return(
       <div className="Note">

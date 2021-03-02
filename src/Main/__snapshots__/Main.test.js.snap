@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main renders as expected 1`] = `
+<section>
+  <ul />
+  <ul
+    className="new_note"
+  >
+    <li
+      className="new_note_link"
+    >
+      <a
+        aria-current={null}
+        href="/folder/addNote"
+        onClick={[Function]}
+      >
+        Add Note
+      </a>
+    </li>
+  </ul>
+</section>
+`;

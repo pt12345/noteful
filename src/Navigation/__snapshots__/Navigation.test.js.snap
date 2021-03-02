@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Renders UI as expected 1`] = `
+<div>
+  <ul />
+  <ul
+    className="new_folder"
+  >
+    <li
+      className="new_folder_link"
+    >
+      <a
+        aria-current={null}
+        href="/folder/addFolder"
+        onClick={[Function]}
+      >
+        Add Folder
+      </a>
+    </li>
+  </ul>
+</div>
+`;

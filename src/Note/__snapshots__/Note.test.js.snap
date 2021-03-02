@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Note renders the UI as expected 1`] = `
+<div
+  className="Note"
+>
+  <h2>
+    <a
+      href="/note/undefined"
+      onClick={[Function]}
+    />
+  </h2>
+  <div
+    className="note_container"
+  >
+    <div
+      className="date_modified"
+    >
+      Last Modified: 
+      N/A
+    </div>
+    <div
+      className="delete_button"
+    >
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        Delete Note
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -33,6 +33,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log(this.state)
     Promise.all([
       fetch('http://localhost:9090/notes'),
       fetch('http://localhost:9090/folders')
