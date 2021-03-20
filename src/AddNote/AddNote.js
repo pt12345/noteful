@@ -10,8 +10,11 @@ class AddNote extends Component {
         const { folders=[] } = this.context
 
         for(let i=0;i<folders.length;i++) {
-            if(folders[i].name === folderName)
-                return folders[i].id;
+            if(folders[i].name === folderName) {
+              console.log("Folder ID = " + Number(folders[i].id))
+              return Number(folders[i].id);
+            }
+                
         }
 
         return "Not Found";
@@ -41,7 +44,7 @@ class AddNote extends Component {
               content: noteText
           }
 
-          fetch(`http://localhost:9090/notes`, {
+          fetch(`http://localhost:8000/api/notes`, {
               method: 'POST',
               headers: {
                 'content-type': 'application/json'

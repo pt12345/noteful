@@ -33,10 +33,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state)
+   
+
     Promise.all([
-      fetch('http://localhost:9090/notes'),
-      fetch('http://localhost:9090/folders')
+      fetch('http://localhost:8000/api/notes'),
+      fetch('http://localhost:8000/api/folders', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+        }
+    })
     ])
     .then(([responseNotes, responseFolders]) => {
 
@@ -49,7 +55,7 @@ class App extends Component {
       return Promise.all([responseNotes.json(), responseFolders.json()])
     })
     .then(([notes, folders]) => {
-
+      
       this.setState({notes, folders});
     });
   }

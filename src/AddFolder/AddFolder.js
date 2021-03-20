@@ -12,8 +12,8 @@ class AddFolder extends Component {
         const folder = {name: document.getElementById('folder-name').value }
         
         if(folder.name.length > 0) {
-            console.log("hi")
-            fetch(`http://localhost:9090/folders`, {
+
+            fetch(`http://localhost:8000/api/folders`, {
                 method: 'POST',
                 headers: {
                   'content-type': 'application/json'

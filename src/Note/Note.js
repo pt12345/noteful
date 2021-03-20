@@ -17,20 +17,13 @@ class Note extends Component {
     event.preventDefault();
     const noteId = this.props.id
 
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(`http://localhost:8000/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
       }
     })
     .then(response => {
-      if(!response.ok)
-        return response.json().then(event => Promise.reject(event))
-      
-      return response.json()
-    })
-    .then(responseJson => {
-      
       this.context.deleteNote(noteId)
       this.props.onDeleteNote(noteId)
     })
