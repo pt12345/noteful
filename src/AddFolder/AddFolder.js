@@ -13,7 +13,7 @@ class AddFolder extends Component {
         
         if(folder.name.length > 0) {
 
-            fetch(`http://localhost:8000/api/folders`, {
+            fetch(`https://radiant-beyond-72329.herokuapp.com/api/folders`, {
                 method: 'POST',
                 headers: {
                   'content-type': 'application/json'

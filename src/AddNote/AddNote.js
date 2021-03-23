@@ -44,7 +44,7 @@ class AddNote extends Component {
               content: noteText
           }
 
-          fetch(`http://localhost:8000/api/notes`, {
+          fetch(`https://radiant-beyond-72329.herokuapp.com/api/notes`, {
               method: 'POST',
               headers: {
                 'content-type': 'application/json'

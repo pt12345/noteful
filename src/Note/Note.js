@@ -17,7 +17,7 @@ class Note extends Component {
     event.preventDefault();
     const noteId = this.props.id
 
-    fetch(`http://localhost:8000/api/notes/${noteId}`, {
+    fetch(`https://radiant-beyond-72329.herokuapp.com/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'

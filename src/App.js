@@ -36,8 +36,8 @@ class App extends Component {
    
 
     Promise.all([
-      fetch('http://localhost:8000/api/notes'),
-      fetch('http://localhost:8000/api/folders', {
+      fetch('https://radiant-beyond-72329.herokuapp.com/api/notes'),
+      fetch('https://radiant-beyond-72329.herokuapp.com/api/folders', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
