@@ -26,6 +26,18 @@ class AddNote extends Component {
         const noteName = document.getElementById('note-name').value;
         const folderName = document.getElementById('folder-name').value;
         const noteText = document.getElementById('note').value;
+
+        if(noteName.length === 0) {
+          alert("Note name is required.");
+        }
+
+        else if(folderName.length === 0) {
+          alert("Folder name is required.");
+        }
+
+        else if(noteText.length === 0) {
+          alert("Note content is required.");
+        }
         
 
         if(noteName.length > 0 && folderName.length > 0 && noteText.length > 0) {

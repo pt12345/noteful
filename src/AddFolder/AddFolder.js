@@ -31,8 +31,11 @@ class AddFolder extends Component {
     
                 this.context.addFolder(responseJson)
     
-                this.props.history.push(`/`)
+                this.props.history.push(`/folder/addNote`)
             })
+        }
+        else {
+            alert("Folder name is required.")
         }
     }
 

@@ -6,8 +6,18 @@ class Navigation extends Component {
 
   static contextType = ApiContext
 
+  getNoteLength = (notes, folderId) => {
+    let note = notes.filter(note => note.folderId === folderId);
+
+    if(typeof note !== 'undefined')
+      return note.length;
+    else
+      return 0;
+  }
+
   render() {
     const { folders=[] } = this.context
+    const { notes=[] } = this.context
 
     return(
       <div>
@@ -19,6 +29,8 @@ class Navigation extends Component {
                         to={`/folder/${folder.id}`}>
                             {folder.name}
                         </NavLink>
+                        
+                        <span> - {this.getNoteLength(notes, folder.id) || "0"}</span>
                   </li>
               )}
           </ul>
